@@ -1,6 +1,4 @@
 require "csv"
-require "readline"
-require "io/console"
 count = 0
 
 puts "1(新規でメモを作成)2(既存のメモを編集する)"
@@ -19,13 +17,9 @@ if memo_type == '1'
     puts "----------"
 
     CSV.open("#{text_name}.csv", 'w') do |csv|
-
-        text_content = gets.chomp
-        csv << [text_content]
-
-        while c = STDIN.getch
-            exit if c == ?\C-d
-            puts "Ctrl + Dで終了"
+        text_content = readlines
+        for text in text_content do
+            csv << [text.chomp]
         end
     end
 
@@ -54,13 +48,9 @@ elsif memo_type == '2'
     puts "----------"
 
     CSV.open("#{edit_name}.csv", 'a') do |csv|
-
-        text_content = gets.chomp
-        csv << [text_content]
-
-        while c = STDIN.getch
-            exit if c == ?\C-d
-            puts "Ctrl + Dで終了"
+        text_content = readlines
+        for text in text_content do
+            csv << [text.chomp]
         end
     end
 end
